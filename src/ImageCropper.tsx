@@ -20,6 +20,7 @@ interface IProps {
   containerColor?: string;
   areaColor?: string;
   areaOverlay?: ReactNode;
+  initialCropperParams?: IImageViewerData;
   setCropperParams: (params: ICropperParams) => void;
 }
 
@@ -144,11 +145,11 @@ class ImageCropper extends PureComponent<IProps, IState> {
   }
 
   state = {
-    positionX: 0,
-    positionY: 0,
+    positionX: this.props?.initialCropperParams?.positionX ?? 0,
+    positionY: this.props?.initialCropperParams?.positionY ?? 0,
     width: 0,
     height: 0,
-    scale: 1,
+    scale: this.props?.initialCropperParams?.scale ?? 1,
     minScale: 1,
     loading: true,
     srcSize: {
@@ -273,6 +274,7 @@ class ImageCropper extends PureComponent<IProps, IState> {
       containerColor,
       areaColor,
       areaOverlay,
+      initialCropperParams,
     } = this.props;
 
     const areaWidth = cropAreaWidth!;
@@ -293,6 +295,8 @@ class ImageCropper extends PureComponent<IProps, IState> {
         containerColor={containerColor}
         imageBackdropColor={areaColor}
         overlay={areaOverlay}
+        startPositionY={initialCropperParams?.positionY}
+        startScale={initialCropperParams?.startScale}
       />
     ) : null;
   }

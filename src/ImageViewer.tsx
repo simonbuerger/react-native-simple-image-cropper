@@ -17,6 +17,9 @@ interface IProps {
   imageWidth: number;
   imageHeight: number;
   minScale: number;
+  startScale: number;
+  startPositionX: number;
+  startPositionY: number;
   onMove: ({ positionX, positionY, scale }: IImageViewerData) => void;
   containerColor?: string;
   imageBackdropColor?: string;
@@ -84,14 +87,14 @@ class ImageViewer extends Component<IProps> {
   constructor(props: IProps) {
     super(props);
 
-    const { areaWidth, areaHeight, imageWidth, imageHeight, minScale } = props;
+    const { areaWidth, areaHeight, imageWidth, imageHeight, minScale, startScale, startPositionX, startPositionY } = props;
 
     this.pinchRef = React.createRef();
     this.dragRef = React.createRef();
 
-    this.translateX = new Value(0);
-    this.translateY = new Value(0);
-    this.scale = new Value(minScale);
+    this.translateX = new Value(startPositionX ?? 0);
+    this.translateY = new Value(startPositionY ?? 0);
+    this.scale = new Value(startScale ?? minScale);
 
     const timingDefaultParams = {
       duration: 200,
